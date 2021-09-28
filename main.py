@@ -37,7 +37,7 @@ from models import TwoLayerNet, VanillaCNN, MyModel, resnet32
 from losses import FocalLoss, reweight
 
 parser = argparse.ArgumentParser(description='CS7643 Assignment-2 Part 2')
-parser.add_argument('--config', default='./configs/config_vanilla_cnn.yaml')
+parser.add_argument('--config', default='./configs/config_mymodel.yaml')
 
 
 class AverageMeter(object):

@@ -30,6 +30,36 @@ class MyModel(nn.Module):
         #############################################################################
         # TODO: Initialize the network weights                                      #
         #############################################################################
+        self.conv_stacks = nn.Sequential(
+            # conv1 block 1
+            nn.Conv2d(in_channels=3, out_channels=64, kernel_size=3, stride=1, padding=2),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3, stride=1, padding=2),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            #
+            # conv1 block 2
+            nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, stride=1, padding=2),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=128, out_channels=128, kernel_size=3, stride=1, padding=2),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            #
+            #
+            # conv1 block 3
+            nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, stride=1, padding=2),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=2),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+
+        )
+
+        self.linear_layer = nn.Sequential(
+            nn.Linear(256 * 7 * 7, 1028),
+            nn.Linear(1028, 1028),
+            nn.Linear(1028, 10)
+        )
 
         #############################################################################
         #                              END OF YOUR CODE                             #
@@ -40,6 +70,10 @@ class MyModel(nn.Module):
         #############################################################################
         # TODO: Implement forward pass of the network                               #
         #############################################################################
+
+        outs = self.conv_stacks(x)
+        outs = torch.flatten(outs, 1)
+        outs = self.linear_layer(outs)
 
         #############################################################################
         #                              END OF YOUR CODE                             #
